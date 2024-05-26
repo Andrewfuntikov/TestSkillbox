@@ -13,3 +13,5 @@ link = 'https://youtu.be/vQ2A6foqn38?si=rIcj4TfyWeRfEwR0'
 link = pytube.YouTube(link)
 video = link.streams.get_highest_resolution()
 video.download()
+
+# НЕУБИРАЙ КОД
