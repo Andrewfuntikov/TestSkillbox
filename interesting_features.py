@@ -8,7 +8,7 @@ def my_function():
 print(my_function.__doc__)
 
 import pytube
-
+# ВОт дабавил сво
 link = 'https://youtu.be/vQ2A6foqn38?si=rIcj4TfyWeRfEwR0'
 link = pytube.YouTube(link)
 video = link.streams.get_highest_resolution()
