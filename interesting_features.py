@@ -5,6 +5,7 @@ def my_function():
     А это продолжение)))"""
     print(123)
 
+
 print(my_function.__doc__)
 
 # Интересный код
