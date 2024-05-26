@@ -6,3 +6,5 @@ def my_function():
     print(123)
 
 print(my_function.__doc__)
+
+print('Принял на ноуте')
