@@ -1,7 +1,7 @@
 # Код ошибки: 1 - Одинаковые карты
 # Код ошибки: 2 - Не смогли удалить полученые карты из списка карт
 # Код ошибки: 3 - Не засчитана победа
-
+# Код ошибки: 4 - Элемент не найден в списке
 import random
 
 cards = ['Черви_6', 'Черви_7', 'Черви_8', 'Черви_9', 'Черви_10', 'Черви_Валет', 'Черви_Дама', 'Черви_Король',
@@ -73,8 +73,8 @@ def error():
 
             for card in card_pc:
                 cards.remove(card)
-        except:
-            print('Техническая ошибка! Перезапустите игру! Код ошибки: 2')
+        except ValueError:
+            print(f'Техническая ошибка! Перезапустите игру! Код ошибки: 2')
 
 
 def error_card():
@@ -83,8 +83,16 @@ def error_card():
         print('Техническая ошибка!  Перезапустите игру! Код ошибки: 1')
 
 
-error()
+def find_index(lst, value):
+    try:
+        index = lst.index(value)
+        return index
+    except ValueError:
+        print('Техническая ошибка! Код ошибки: 4')
 
+
+error()
+choice_pc = random.choice(card_pc)
 while len(card_player) > 0 and len(card_pc) > 0:
     try:
         error_card()
@@ -115,27 +123,39 @@ while len(card_player) > 0 and len(card_pc) > 0:
             if meaning_card_player > meaning_card_pc:
                 print('Игрок выйграл этот раунд.')
                 win_player += 1
-
+                card_player.remove(choice_player)  # Удаление карты из колоды
+                card_pc.remove(choice_pc)  # Удаление карты из колоды
+                index_player = find_index(cards, choice_player)
+                index_pc = find_index(cards, choice_pc)
+                cards.pop(index_player)  # Удаление карты из колоды
+                cards.pop(index_pc)  # Удаление карты из колоды
             elif meaning_card_player == meaning_card_pc:
                 print('Одинаковые значения карт == недопустимо.')
 
             elif meaning_card_player < meaning_card_pc:
                 print('Компьютер выйграл этот раунд.')
                 win_pc += 1
+                card_player.remove(choice_player)  # Удаление карты из колоды
+                card_pc.remove(choice_pc)  # Удаление карты из колоды
+                index_player = find_index(cards, choice_player)
+                index_pc = find_index(cards, choice_pc)
+                cards.pop(index_player)  # Удаление карты из колоды
+                cards.pop(index_pc)  # Удаление карты из колоды
 
             else:
                 print('Техническая ошибка! \n Перезапустите игру!\n Код ошибки: 3')
-            card_player.remove(choice_player)  # Удаление карты из колоды
-            card_pc.remove(choice_pc)  # Удаление карты из колоды
-            cards.remove(choice_player)  # Удаление карты из колоды
-            cards.remove(choice_pc)  # Удаление карты из колоды
-            print(f'В колоде осталось {len(cards)} карт.')
-            print(len(card_pc))
+                card_player.remove(choice_player)  # Удаление карты из колоды
+                card_pc.remove(choice_pc)  # Удаление карты из колоды
+                index_player = find_index(cards, choice_player)
+                index_pc = find_index(cards, choice_pc)
+                cards.pop(index_player)  # Удаление карты из колоды
+                cards.pop(index_pc)  # Удаление карты из колоды
             if len(card_player) < 6:
                 card_player.extend(random.sample(cards, 6 - len(card_player)))
             if len(card_pc) < 6:
                 card_pc.extend(random.sample(cards, 6 - len(card_pc)))
             error_card()
+            error()
         elif choice_pc[0] != choice_player[0] and random_mast[0] != choice_pc[0]:
             for card in card_pc:
                 choice_pc = random.choice(card_pc)
@@ -144,11 +164,13 @@ while len(card_player) > 0 and len(card_pc) > 0:
                     break
             else:
                 card_pc.append(choice_player)
-                print('Компютер берёт карту')
+                print('Компютер берёт карты')
+                card_player.remove(choice_player)  # Удаление карты из колоды
+                card_pc.remove(choice_pc)
                 error_card()
             continue
         elif choice_pc == choice_player:
-            print('Ошибка')
+            print('Техническая ошибка!  Перезапустите игру! Код ошибки: 1')
             continue
     except:
         # Пополнение карт до 6
