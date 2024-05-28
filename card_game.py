@@ -27,8 +27,7 @@ def error():
             for card in card_pc:
                 cards.remove(card)
         except:
-            print('Техническая ошибка! \n Перезапустите игру!\n Код ошибки: 2')
-            print(len(cards))
+            print('Техническая ошибка! Перезапустите игру! Код ошибки: 2')
 
 
 dict_card = {'Черви_6': 100,
@@ -89,7 +88,10 @@ while len(card_player) > 0 and len(card_pc) > 0:
         while choice_player not in card_player:  # Проверка на ввод карты, которой нет у игрока
             print('У вас нет такой карты!')
             choice_player = input('Введите карту которой хотите сходить: ')
-        choice_pc = random.choice(card_pc)
+        for card in card_pc:
+            choice_pc = random.choice(card_pc)
+            if choice_pc[0] == choice_player[0] or random_mast[0] == choice_pc[0]:
+                break
         if choice_pc[0] == choice_player[0] or random_mast[0] == choice_pc[0]:
 
             meaning_card_player = dict_card[choice_player]
@@ -127,10 +129,9 @@ while len(card_player) > 0 and len(card_pc) > 0:
         elif choice_pc[0] != choice_player[0] and random_mast[0] != choice_pc[0]:
             for card in card_pc:
                 choice_pc = random.choice(card_pc)
-                continue
+                if choice_pc[0] == choice_player[0] or random_mast[0] == choice_pc[0]:
+                    break
             else:
-                print(card_pc)
-                print(choice_pc)
                 card_pc.append(choice_player)
                 print('Компютер берёт карту')
             continue
@@ -140,7 +141,6 @@ while len(card_player) > 0 and len(card_pc) > 0:
             card_player.extend(random.sample(cards, 6 - len(card_player)))
         if len(card_pc) < 6:
             card_pc.extend(random.sample(cards, 6 - len(card_pc)))
-        continue
 
 if win_pc > win_player:
     print('Увы.... \n Компьютер выйграл.')
