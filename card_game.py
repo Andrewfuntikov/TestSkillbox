@@ -14,22 +14,6 @@ cards = ['Черви_6', 'Черви_7', 'Черви_8', 'Черви_9', 'Чер
 card_player = random.sample(cards, 6)
 card_pc = random.sample(cards, 6)
 
-
-def error():
-    if card_player == card_pc:
-        print('Техническая ошибка! \n Перезапустите игру!\n Код ошибки: 1')
-    while len(cards) > 24:
-        try:
-            # Удаляем карты из списка cards
-            for card in card_player:
-                cards.remove(card)
-
-            for card in card_pc:
-                cards.remove(card)
-        except:
-            print('Техническая ошибка! Перезапустите игру! Код ошибки: 2')
-
-
 dict_card = {'Черви_6': 100,
              'Черви_7': 110,
              'Черви_8': 120,
@@ -76,10 +60,34 @@ meaning_card_pc = 0
 win_pc = 0
 win_player = 0
 round_number = 1
+
+
+def error():
+    if card_player == card_pc:
+        print('Техническая ошибка!  Перезапустите игру! Код ошибки: 1')
+    while len(cards) > 24:
+        try:
+            # Удаляем карты из списка cards
+            for card in card_player:
+                cards.remove(card)
+
+            for card in card_pc:
+                cards.remove(card)
+        except:
+            print('Техническая ошибка! Перезапустите игру! Код ошибки: 2')
+
+
+def error_card():
+    # Проверка на ошибки в колодах
+    if len(set(card_player)) < 6 or len(set(card_pc)) < 6:
+        print('Техническая ошибка!  Перезапустите игру! Код ошибки: 1')
+
+
 error()
 
 while len(card_player) > 0 and len(card_pc) > 0:
     try:
+        error_card()
         print(f'Раунд: {round_number}')
         round_number += 1
         print(f'В колоде осталось {len(cards)} карт.')  # Печатаем количество карт в колоде
@@ -92,6 +100,7 @@ while len(card_player) > 0 and len(card_pc) > 0:
             choice_pc = random.choice(card_pc)
             if choice_pc[0] == choice_player[0] or random_mast[0] == choice_pc[0]:
                 break
+        error_card()
         if choice_pc[0] == choice_player[0] or random_mast[0] == choice_pc[0]:
 
             meaning_card_player = dict_card[choice_player]
@@ -126,14 +135,20 @@ while len(card_player) > 0 and len(card_pc) > 0:
                 card_player.extend(random.sample(cards, 6 - len(card_player)))
             if len(card_pc) < 6:
                 card_pc.extend(random.sample(cards, 6 - len(card_pc)))
+            error_card()
         elif choice_pc[0] != choice_player[0] and random_mast[0] != choice_pc[0]:
             for card in card_pc:
                 choice_pc = random.choice(card_pc)
                 if choice_pc[0] == choice_player[0] or random_mast[0] == choice_pc[0]:
+                    error_card()
                     break
             else:
                 card_pc.append(choice_player)
                 print('Компютер берёт карту')
+                error_card()
+            continue
+        elif choice_pc == choice_player:
+            print('Ошибка')
             continue
     except:
         # Пополнение карт до 6
@@ -142,10 +157,12 @@ while len(card_player) > 0 and len(card_pc) > 0:
         if len(card_pc) < 6:
             card_pc.extend(random.sample(cards, 6 - len(card_pc)))
 
-if win_pc > win_player:
-    print('Увы.... \n Компьютер выйграл.')
+if win_player > win_pc:
+    print(f'Поздравляем! Игрок победил компьютер со счетом {win_player}:{win_pc}')
+elif win_player < win_pc:
+    print(f'Компьютер победил! Результат {win_player}:{win_pc}')
 else:
-    print('Вы выйграли. Поздравляю!')
+    print('Ничья!')
 
 # TODO добавить коректировки
 # TODO добавить try обработчик ошибок
