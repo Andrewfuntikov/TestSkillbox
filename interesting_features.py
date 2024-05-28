@@ -80,4 +80,10 @@ print_them_all_v3(1000, 'рублей', name='Вася', address='Moscow')
 
 my_friend = {'name': 'Вася', 'address': 'Moscow'}
 print_them_all_v3(1000, 'рублей', **my_friend)
-# ПРОБЛЕМА
+
+def factorial(n):
+    if  n == 1:
+        return 1
+    factorial_n_minus_1 = factorial(n=n-1)
+    return n *factorial_n_minus_1
+print(factorial(9))
