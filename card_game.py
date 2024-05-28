@@ -125,8 +125,8 @@ while len(card_player) > 0 and len(card_pc) > 0:
                 win_player += 1
                 card_player.remove(choice_player)  # Удаление карты из колоды
                 card_pc.remove(choice_pc)  # Удаление карты из колоды
-                index_player = find_index(cards, choice_player)
-                index_pc = find_index(cards, choice_pc)
+                index_player = cards.index(choice_player)
+                index_pc = cards.index(choice_pc)
                 cards.pop(index_player)  # Удаление карты из колоды
                 cards.pop(index_pc)  # Удаление карты из колоды
             elif meaning_card_player == meaning_card_pc:
@@ -137,19 +137,19 @@ while len(card_player) > 0 and len(card_pc) > 0:
                 win_pc += 1
                 card_player.remove(choice_player)  # Удаление карты из колоды
                 card_pc.remove(choice_pc)  # Удаление карты из колоды
-                index_player = find_index(cards, choice_player)
-                index_pc = find_index(cards, choice_pc)
+                index_player = cards.index(choice_player)
+                index_pc = cards.index(choice_pc)
                 cards.pop(index_player)  # Удаление карты из колоды
                 cards.pop(index_pc)  # Удаление карты из колоды
 
             else:
-                print('Техническая ошибка! \n Перезапустите игру!\n Код ошибки: 3')
+                print('Техническая ошибка! Перезапустите игру! Код ошибки: 3')
                 card_player.remove(choice_player)  # Удаление карты из колоды
                 card_pc.remove(choice_pc)  # Удаление карты из колоды
-                index_player = find_index(cards, choice_player)
-                index_pc = find_index(cards, choice_pc)
-                cards.pop(index_player)  # Удаление карты из колоды
-                cards.pop(index_pc)  # Удаление карты из колоды
+                index_player = cards.index(choice_player)
+                index_pc = cards.index(choice_pc)
+                cards.pop(index_player)
+                cards.pop(index_pc)
             if len(card_player) < 6:
                 card_player.extend(random.sample(cards, 6 - len(card_player)))
             if len(card_pc) < 6:
