@@ -131,15 +131,11 @@ while len(card_player) > 0 and len(card_pc) > 0:
             card_player.remove(choice_player)
             card_pc.remove(choice_pc)
             error_card()
-        # elif choice_pc == choice_player:
-        #     print('Техническая ошибка!  Перезапустите игру! Код ошибки: 1')
-        #     continue
     except:
         if len(card_player) < 6:
             card_player.extend(random.sample(cards, 6 - len(card_player)))
         if len(card_pc) < 6:
             card_pc.extend(random.sample(cards, 6 - len(card_pc)))
-        print('УПС')
 
 if win_player > win_pc:
     print(f'Поздравляем! Игрок победил компьютер со счетом {win_player}:{win_pc}')
